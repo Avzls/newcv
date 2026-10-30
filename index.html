@@ -307,7 +307,7 @@ setTimeout(function(){$('#t').classList.add('done')},2300);
 var ps=$$('.panel'),nav=document.createElement('nav');nav.className='dots';nav.setAttribute('aria-label','Sections');
 ps.forEach(function(p,k){var h=p.querySelector('h2'),l=h?h.textContent.trim():'Home',b=document.createElement('button');b.setAttribute('aria-label',l);b.dataset.l=l;if(!k)b.className='on';b.addEventListener('click',function(){p.scrollIntoView({behavior:RM?'auto':'smooth',block:'center'})});nav.appendChild(b)});
 document.body.appendChild(nav);
-var ST=['Raw material','Blending','Reaction','Distillation','Monitoring','Packaging','Storage','Delivery'],hd=document.createElement('div');
+ var ST=['Client edge','API gateway','App servers','Data layer','Observability','CI / CD','Cloud storage','Network edge'],hd=document.createElement('div');
 hd.className='hud';hd.setAttribute('aria-hidden','true');hd.innerHTML='<span><b></b> <em></em></span><span class="seg">'+ST.map(function(){return '<i></i>'}).join('')+'</span>';document.body.appendChild(hd);
 function hud(k){hd.querySelector('b').textContent='0'+(k+1);hd.querySelector('em').textContent=ST[k];[].forEach.call(hd.querySelectorAll('i'),function(e,j){e.classList.toggle('on',j<=k)})}hud(0);
 var nio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){var k=ps.indexOf(e.target);[].forEach.call(nav.children,function(b,j){b.classList.toggle('on',j==k)});hud(k)}})},{rootMargin:'-45% 0px -45% 0px'});
@@ -329,7 +329,7 @@ $$('.rv').forEach(function(c){var t=[];[].forEach.call(c.children,function(e){if
 
  /* Keep the hero role stable so the introduction remains easy to read. */
 
-/* 3D scene: chemical plant, soft clay look with shadows and tags */
+ /* 3D scene: connected digital infrastructure, soft clay look with shadows and tags */
  var R=null,S,Cam,dl,pl,beads,PC={},mats={},LB=[],G=window.THREE,sp=0,sx=0,A=[0,1],NB=innerWidth<700?36:90;
  if(!RM)try{
  R=new G.WebGLRenderer({canvas:$('#c'),antialias:true,alpha:true});
@@ -352,40 +352,30 @@ var cyl=function(rt,rb2,h,ro,px,py,pz,v,p){return put(mesh(new G.CylinderGeometr
 rb(86,.3,11,'g',35,-.15,0,null,null,.12);
 x=cyl(.17,.17,50,'b',25,1.2,-1.1,'t');x.rotation.z=Math.PI/2;
 [-1.2,10,20,30,50].forEach(function(px){var m=cyl(.12,.12,1.1,'b',px,1.2,-.6,'t');m.rotation.x=Math.PI/2});
-/* 0 raw material */
-tank(1.6,4,'e',-1.2,0,0);tank(1.63,.35,'b',-1.2,2.4,0,.15);tank(.5,.3,'a',-1.2,4,0,.12);
-tank(1.2,3,'e',1.9,0,.4);tank(1.23,.3,'a',1.9,1.6,.4,.12);
-/* 1 blending */
-tank(1.5,3,'m',10,0,0,.6);tank(1.53,.3,'a',10,1.2,0,.12);rb(.9,.7,.9,'a',10,3.35,0);T.paddle=rb(1,.1,.22,'c',10,3.85,0);
-/* 2 reactor */
-[[1,1],[1,-1],[-1,1],[-1,-1]].forEach(function(q){cyl(.1,.1,.7,'b',20+q[0]*.9,.35,q[1]*.9)});
-tank(1.3,4.4,'m',20,.5,0,.95);tank(1.34,.3,'c',20,1.7,0,.12);tank(1.34,.3,'c',20,3.3,0,.12);rb(.8,.6,.8,'a',20,5.4,0);
-T.glow=put(mesh(new G.SphereGeometry(.36,16,12),'c','*'),20,2.7,1.28);
-/* 3 distillation */
-tank(.85,.4,'a',30,0,0,.1);tank(.75,7,'e',30,.4,0,.4);
-for(i=1;i<5;i++)tank(.78,.22,'a',30,.4+i*1.4,0,.08);
-x=cyl(.35,.35,1.8,'b',31.6,7,0);x.rotation.z=Math.PI/2;cyl(.1,.1,3,'b',32.5,5.5,0);
-/* 4 control room */
+ /* 0 client edge: laptops, phones, and an access point */
+ rb(2.2,.18,1.5,'e',-2,.8,0,null,null,.08);rb(1.5,1.1,.12,'m',-2,1.42,0);cyl(.06,.06,1.8,'b',-2,2.2,0);rb(1.2,.12,.8,'a',1.2,.5,.4,null,null,.08);T.paddle=rb(.55,.08,.18,'c',1.2,1.1,.4);
+ /* 1 API gateway: load balancer and request routing */
+ rb(2.8,1.5,1.5,'m',10,.8,0,null,null,.16);rb(2.2,.16,1.2,'a',10,1.65,0);cyl(.07,.07,2.4,'b',10,2.5,0);T.paddle=rb(.7,.08,.3,'c',10,3.4,0);
+ /* 2 application servers: connected rack cluster */
+ for(i=0;i<3;i++){rb(1.5,2.6,1.1,'e',18+i*2.2,.9,0,null,null,.12);for(k=0;k<3;k++)rb(.18,.08,.08,'c',17.45+i*2.2,.65+k*.55,.57,null,null,.03)}
+ T.glow=put(mesh(new G.SphereGeometry(.36,16,12),'c','*'),20,3.5,1.1);
+ /* 3 data layer: database nodes and replication link */
+ for(i=0;i<3;i++){tank(.85,1.7,'e',29+i*2.2,.7,0,.16);tank(.88,.16,'a',29+i*2.2,1.58,0,.06)}
+ x=cyl(.12,.12,6,'b',32,2.8,0);x.rotation.z=Math.PI/2;cyl(.05,.05,3,'b',32,3.4,0);
+ /* 4 observability room */
 rb(4,2.2,2.8,'e',40,1.1,2.6,null,null,.35);rb(4.4,.3,3.2,'a',40,2.35,2.6);rb(.7,1.3,.06,'a',41.2,.65,4.02);
 for(i=0;i<3;i++)T.scr.push(put(mesh(new G.BoxGeometry(.9,.55,.04),'m','*'),38.9+i*1.1,1.4,4.03));
 cyl(.04,.04,1.6,'b',41.4,3.2,2.6);put(mesh(new G.SphereGeometry(.1,8,6),'c','*'),41.4,4,2.6);
 x=cyl(.03,.03,10,'m',35,.15,2.2,'*');x.rotation.z=Math.PI/2;
-/* 5 packaging */
-rb(.3,3.2,.3,'a',49,1.6,.8);rb(.3,3.2,.3,'a',51,1.6,.8);rb(2.6,.35,.6,'a',50,3.2,.8);
-cyl(.17,.17,2.4,'b',50,2.4,-1.1,'t');x=cyl(.17,.17,1.9,'b',50,3.2,-.15,'t');x.rotation.x=Math.PI/2;
-cyl(.12,.12,.9,'c',50,2.65,.8);rb(21,.3,1.6,'a',58.5,.65,.8);
-for(i=0;i<9;i++){x=new G.Group();tank(.42,.85,CC[i%4],0,-.425,0,.16,x);tank(.43,.12,'e',0,-.06,0,.05,x);g.add(x);D.push(x)}
-/* 6 storage */
-rb(6,3,4,'b',60,1.5,-2.4,null,null,.3);rb(6.5,.35,4.5,'a',60,3.2,-2.4);rb(1.8,2.1,.08,'a',60,1.05,-.37);rb(4,.3,.08,'e',60,2.65,-.37);
-/* 7 port: water, ship, quay crane, containers */
-rb(34,.2,9,'w',72,-.12,-9.5,null,null,.08);
-rb(14,1.6,3.6,'a',72,.7,-8.2,null,null,.5);rb(2.2,2.2,3,'e',77,2.6,-8.2);tank(.35,1,'c',77.2,3.7,-8.2,.1);
-for(i=0;i<5;i++)for(k=0;k<2;k++)rb(1.9,.9,.9,CC[(i+k*2)%6],67.6+i*2.05,1.95+k*.95,-8.2,null,null,.12);
-[[69,2],[71,2],[69,-4],[71,-4]].forEach(function(q){rb(.35,6.5,.35,'c',q[0],3.25,q[1])});
-rb(.5,.5,13,'c',70,6.6,-3.5);rb(2.4,.4,.4,'c',70,6.5,2);rb(2.4,.4,.4,'c',70,6.5,-4);
-T.troll=rb(.9,.4,.9,'d',70,6.2,3);T.cab=cyl(.03,.03,1,'a',70,5,3);
-for(i=0;i<3;i++)for(k=0;k<2;k++)if(i||k)rb(1.9,.9,.9,CC[(i*2+k+1)%6],65.6+i*2.05,.45,3.2+k*1.1,null,null,.12);
-T.cont=rb(1.9,.9,.9,'c',70,.45,3,null,null,.12);
+ /* 5 CI / CD: build runners and artifact stream */
+ rb(2.8,2.1,2.4,'a',50,1.1,.8,null,null,.2);for(i=0;i<3;i++)rb(1.4,.18,1.2,'c',50,1.2+i*.55,.8);rb(5,.22,1.2,'b',55,.65,.8);for(i=0;i<9;i++){x=new G.Group();rb(.35,.7,.35,CC[i%4],0,.35,0,null,x,.06);g.add(x);D.push(x)}
+ /* 6 cloud storage: cloud cluster and data vault */
+ rb(5,2.4,3,'b',62,1.4,-2.4,null,null,.3);rb(1.8,.18,.18,'c',60.8,1.4,-.82);rb(1.8,.18,.18,'c',63.2,1.4,-.82);for(i=0;i<4;i++)put(mesh(new G.SphereGeometry(.8,12,8),'w','*'),59.7+i*1.5,3,-2.4);
+ /* 7 network edge: CDN nodes, router, and connected traffic plane */
+ rb(34,.2,9,'w',72,-.12,-9.5,null,null,.08);rb(2.8,1.4,2.4,'a',72,.8,-8.2,null,null,.3);rb(1.8,.5,1.8,'e',77,1.2,-8.2);tank(.35,1,'c',77.2,2.3,-8.2,.1);
+ for(i=0;i<5;i++)for(k=0;k<2;k++)rb(1.2,.5,.7,CC[(i+k*2)%6],67.6+i*2.05,1.5+k*.8,-8.2,null,null,.08);
+ [[69,2],[71,2],[69,-4],[71,-4]].forEach(function(q){rb(.2,4,.2,'c',q[0],2.2,q[1])});
+ rb(.3,.3,10,'c',70,4.5,-3.5);T.troll=rb(.7,.3,.7,'d',70,4.2,3);T.cab=cyl(.03,.03,1,'a',70,3.4,3);T.cont=rb(1.1,.5,.8,'c',70,.45,3,null,null,.08);
 for(i=0;i<6;i++)P.push(put(mesh(new G.SphereGeometry(.4,10,8),'e','*'),30,8,0));
 T.g=g;
 T.tick=function(c,sp,p){T.paddle.rotation.y=c*3;T.glow.scale.setScalar(1+Math.sin(c*3)*.12);
@@ -400,7 +390,7 @@ return T};
 pl=plant();S.add(pl.g);
 beads=new G.InstancedMesh(new G.SphereGeometry(.14,10,8),new G.MeshBasicMaterial(),NB);beads.frustumCulled=false;
 var c0=new G.Color(1,1,1),q;for(q=0;q<NB;q++)beads.setColorAt(q,c0);S.add(beads);
-LB=[[-1.2,4.7,0,'Raw material tank · T-101'],[10,4.8,0,'Blender · M-201'],[20,7,0,'Reactor · R-301'],[30,8.2,0,'Distillation column · C-401'],[40,3.9,2.6,'Control room · CR-01'],[50,4,.8,'Filling line · F-501'],[60,4,-2.4,'Warehouse · W-01'],[70,7.6,-3.5,'Quay crane · QC-01'],[73,4.8,-8.2,'MV Delivery · D1']].map(function(a,n){var e=document.createElement('div');e.className='lb';e.innerHTML='<i>'+(n+1)+'</i>'+a[3];document.body.appendChild(e);return{e:e,v:new G.Vector3(a[0],a[1],a[2])}});
+ LB=[[-2,3,0,'Client edge · WEB-01'],[10,4.8,0,'API gateway · API-01'],[20,4.8,0,'App cluster · APP-01'],[32,4.8,0,'Database layer · DB-01'],[40,3.9,2.6,'Observability · OBS-01'],[50,3.8,.8,'CI / CD runner · DEV-01'],[62,4,-2.4,'Cloud storage · S3-01'],[70,4.8,-3.5,'Network edge · CDN-01'],[77,3.8,-8.2,'Router · NET-01']].map(function(a,n){var e=document.createElement('div');e.className='lb';e.innerHTML='<i>'+(n+1)+'</i>'+a[3];document.body.appendChild(e);return{e:e,v:new G.Vector3(a[0],a[1],a[2])}});
 var PAL={l:{a:0x284139,b:0x809076,c:0xd9792e,d:0xe3b448,e:0xfbf6e4,g:0xe6dcb4,m:0x9cc3ae,r:0x9a4a3f,w:0xa8d0cf},d:{a:0x35594c,b:0x809076,c:0xe0833a,d:0xf0cb6a,e:0xd8e4dc,g:0x1d2d2a,m:0x5f9a85,r:0xb4594c,w:0x2c5f66}};
 setCols=function(dk){var p=PAL[dk?'d':'l'];Object.keys(mats).forEach(function(k){mats[k].color.setHex(p[mats[k].userData.r])});S.fog.color.setHex(dk?0x111a19:0xf4ebcb);PC={b:new G.Color(p.b),c:new G.Color(p.c),d:new G.Color(p.d)}};
 }catch(e){R=null;if(window.console)console.error(e)}
