@@ -150,7 +150,7 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .portrait .me{display:block;flex:none;height:100%;width:auto;aspect-ratio:auto;border:0;border-radius:0;box-shadow:none;transform-origin:50% 100%;filter:drop-shadow(0 28px 26px rgba(40,65,57,.35))}
 .tg,.lb{display:flex;align-items:center;gap:8px;padding:5px 12px 5px 5px;border-radius:99px;background:var(--bg);border:1px solid var(--line);box-shadow:0 8px 20px -10px rgba(0,0,0,.4);font-size:.8rem;font-weight:500;white-space:nowrap}
 .tg i,.lb i{font-style:normal;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--hot);color:#fff;font-size:.74rem;font-weight:600}
-.tg{position:absolute;animation:fl 5s ease-in-out infinite alternate}
+ .tg{position:absolute}
 .t1{left:-30%;top:24%}.t2{right:-26%;top:42%;animation-delay:-1.6s}.t3{left:-20%;top:68%;animation-delay:-3.2s}
 @keyframes fl{to{transform:translateY(-10px)}}
 .lb{position:fixed;left:0;top:0;z-index:1;pointer-events:none;opacity:0;transition:opacity .35s}
@@ -328,9 +328,7 @@ $$('.rv').forEach(function(c){var t=[];[].forEach.call(c.children,function(e){if
  });
 
 /* role scramble */
-(function(){var el=$('#role');if(!el||RM||innerWidth<700)return;var L=['fullstack developer','frontend + backend builder','API integration developer','problem solver'],n=0,Z='abcdefghijklmnopqrstuvwxyz#%&*';
-function go(t){var f=0,iv=setInterval(function(){var o='';for(var k=0;k<t.length;k++)o+=k<f/1.2?t[k]:(t[k]==' '?' ':Z[Math.random()*Z.length|0]);el.textContent=o;if(++f>t.length*1.2+2){clearInterval(iv);el.textContent=t}},35)}
-setInterval(function(){go(L[++n%L.length])},2900)})();
+ /* Keep the hero role stable so the introduction remains easy to read. */
 
 /* 3D scene: chemical plant, soft clay look with shadows and tags */
 var R=null,S,Cam,dl,pl,beads,PC={},mats={},LB=[],G=window.THREE,sp=0,sx=0,A=[0,1],NB=90;
