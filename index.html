@@ -119,8 +119,8 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;bac
 @keyframes drift{to{transform:translate(8vmax,6vmax) scale(1.12)}}
 #t{font-size:clamp(3.6rem,12vw,10rem)}
 .panel.hero{display:grid;grid-template-columns:1.25fr 1fr;gap:clamp(20px,4vw,60px);align-items:center}
-.portrait{position:relative;justify-self:center;will-change:transform}
-.portrait .me{display:block;flex:none;width:clamp(210px,26vw,330px);height:auto;aspect-ratio:380/500;border-radius:999px 999px 24px 24px;border:1px solid var(--line);box-shadow:0 30px 60px -30px rgba(40,65,57,.55);will-change:transform}
+ .portrait{position:relative;justify-self:center}
+ .portrait .me{display:block;flex:none;width:clamp(210px,26vw,330px);height:auto;aspect-ratio:380/500;border-radius:999px 999px 24px 24px;border:1px solid var(--line);box-shadow:0 30px 60px -30px rgba(40,65,57,.55)}
 .badge{position:absolute;left:-16%;bottom:-6%;width:46%;color:var(--fg);pointer-events:none}
 .badge text{font:500 15px "DM Sans",sans-serif;letter-spacing:3px;fill:currentColor}
 .job{position:relative;padding:12px 0 18px 28px;border-bottom:0}
@@ -328,7 +328,7 @@ $$('.rv').forEach(function(c){var t=[];[].forEach.call(c.children,function(e){if
  });
 
 /* role scramble */
-(function(){var el=$('#role');if(!el||RM)return;var L=['fullstack developer','frontend + backend builder','API integration developer','problem solver'],n=0,Z='abcdefghijklmnopqrstuvwxyz#%&*';
+(function(){var el=$('#role');if(!el||RM||innerWidth<700)return;var L=['fullstack developer','frontend + backend builder','API integration developer','problem solver'],n=0,Z='abcdefghijklmnopqrstuvwxyz#%&*';
 function go(t){var f=0,iv=setInterval(function(){var o='';for(var k=0;k<t.length;k++)o+=k<f/1.2?t[k]:(t[k]==' '?' ':Z[Math.random()*Z.length|0]);el.textContent=o;if(++f>t.length*1.2+2){clearInterval(iv);el.textContent=t}},35)}
 setInterval(function(){go(L[++n%L.length])},2900)})();
 
@@ -445,7 +445,6 @@ $$('.proj img').forEach(function(el){el.tabIndex=0;el.setAttribute('role','butto
 function frame(){
 clock+=.016;var sy=scrollY,vh=innerHeight,h=document.documentElement.scrollHeight-vh;
 bar.style.transform='scaleX('+(h>0?sy/h:0)+')';
- if(me){pt.style.transform='none';me.style.transform='none'}
 jobs.forEach(function(j){var r=j.getBoundingClientRect();if(r.bottom<0||r.top>vh)return;var p=cl((vh*.62-r.top)/r.height,0,1);j.style.setProperty('--p',p.toFixed(3));j.classList.toggle('act',p>0)});
 if(R)draw(sy,h);requestAnimationFrame(frame)}
 frame();
